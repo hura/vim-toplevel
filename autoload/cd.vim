@@ -12,6 +12,8 @@ let s:vcs_list = get(g:, 'cd_vcs_list', [])
 if empty(s:vcs_list)
   let s:vcs_list = keys(filter(s:vcs_dict, 'executable(v:val)'))
 endif
+
+let s:vsmode = (has('win32') && get(g:, 'cd_enable_vimshell')) ? 1 : 0
 "}}}
 
 " #find_root_by_finddir {{{1
@@ -73,12 +75,26 @@ endfunction
 
 " #detect_git {{{1
 function! cd#detect_git() abort
-  let root = system('git rev-parse --show-toplevel')
+  let cmd = 'git rev-parse --show-toplevel'
+
+  if s:vsmode
+    let ret = xolox#misc#os#exec({'command': cmd})
+    return ret.exit_code ? '' : join(ret.stdout, "\n")
+  endif
+
+  let root = system(cmd)
   return v:shell_error ? '' : root
 endfunction
 
 " #detect_hg {{{1
 function! cd#detect_hg() abort
-  let root = system('hg root')
+  let cmd = 'hg root'
+
+  if s:vsmode
+    let ret = xolox#misc#os#exec({'command': cmd})
+    return ret.exit_code ? '' : join(ret.stdout, "\n")
+  endif
+
+  let root = system(cmd)
   return v:shell_error ? '' : root
 endfunction

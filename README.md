@@ -54,6 +54,12 @@ Put these variables into your vimrc:
 
 Tell vim-cd what VCS to look for and in what order.
 
+    let g:cd_enable_vimshell = 0
+
+If you're on Windows and have vim-misc/vim-shell installed, enabling this will
+avoid the annoying flickering of the cmd.exe popping up for the fraction of a
+second. Only makes a difference for `:Root`, not for `:Cd`.
+
 Installation & Documentation
 ----------------------------
 
