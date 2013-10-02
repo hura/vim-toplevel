@@ -27,16 +27,22 @@ send a pull request). Thanks!
 
 ---
 
-There are really just two commands:
+There are really just two commands that try to accomplish the same: changing to
+the root directory. Both use different approaches, though.
+
+You'll almost always want to use `:Cd`, because it should be faster since it
+doesn't have to run external programs.
+
+---
 
 ```
 :Cd        change directory for the current window
 :Cd!       change directory for all windows
 ```
 
-This command uses the builtin function _finddir()_ to get the VCS root repository
-and change to it. It starts searching from the directory of the current
-buffer.
+This command uses the builtin function _finddir()_ to get the VCS root
+repository and change to it. It starts searching upwards from the directory of
+the current buffer.
 
 ```
 :Root      change directory for the current window
