@@ -43,7 +43,7 @@ buffer.
 :Root!     change directory for all windows
 ```
 
-This command uses the builtin function |system()| to start external programs
+This command uses the builtin function _system()_ to start external programs
 (e.g. _git_ or _hg_) to get the VCS root directory and change to it.
 
 Options
