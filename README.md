@@ -20,6 +20,7 @@ Supported VCS:
 
     - git
     - hg
+    - bzr
 
 If you want support for another VCS, please open an issue report on Github (or
 send a pull request). Thanks!

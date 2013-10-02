@@ -6,6 +6,7 @@ scriptencoding utf-8
 let s:vcs_dict = {
       \ 'git': 'git',
       \ 'hg':  'hg',
+      \ 'bzr': 'bzr',
       \ }
 
 let s:vcs_list = get(g:, 'cd_vcs_list', [])
@@ -89,6 +90,19 @@ endfunction
 " #detect_hg {{{1
 function! s:detect_hg() abort
   let cmd = 'hg root'
+
+  if s:vsmode
+    let ret = xolox#misc#os#exec({'command': cmd})
+    return ret.exit_code ? '' : join(ret.stdout, "\n")
+  endif
+
+  let root = system(cmd)
+  return v:shell_error ? '' : root
+endfunction
+
+" #detect_bzr {{{1
+function! s:detect_bzr() abort
+  let cmd = 'bzr root'
 
   if s:vsmode
     let ret = xolox#misc#os#exec({'command': cmd})
