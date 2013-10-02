@@ -1,5 +1,5 @@
-vim-cd
-------
+vim-toplevel
+------------
 
 by Marco Hinz
 
@@ -14,7 +14,7 @@ Github.
 Intro
 -----
 
-vim-cd helps changing to the root directory of a version control system.
+vim-toplevel helps changing to the root directory of a version control system.
 
 Supported VCS:
 
@@ -51,13 +51,13 @@ Options
 
 Put these variables into your vimrc:
 
-    let g:cd_vcs_list = ['git', 'hg']
+    let g:toplevel_vcs_list = ['git', 'hg']
 
-Tell vim-cd what VCS to look for and in what order.
+Tell vim-toplevel what VCS to look for and in what order.
 
 Possible values are: `['git', 'hg', 'bzr']`
 
-    let g:cd_enable_vimshell = 0
+    let g:toplevel_enable_vimshell = 0
 
 If you're on Windows and have vim-misc/vim-shell installed, enabling this will
 avoid the annoying flickering of the cmd.exe popping up for the fraction of a
@@ -68,15 +68,15 @@ Installation & Documentation
 
 If you have no preferred installation method, I suggest using tpope's
 [pathogen](https://github.com/tpope/vim-pathogen). Afterwards installing
-vim-cd is as easy as pie:
+vim-toplevel is as easy as pie:
 
-    $ git clone https://github.com/mhinz/vim-cd ~/.vim/bundle/vim-cd
+    $ git clone https://github.com/mhinz/vim-toplevel ~/.vim/bundle/vim-toplevel
 
 It works without any configuration, but you might want to look into the
 documentation for further customization:
 
     :Helptags  " rebuilding tags files
-    :h vim-cd
+    :h toplevel
 
 License
 -------

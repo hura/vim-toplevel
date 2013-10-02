@@ -1,7 +1,7 @@
-*cd.txt*  Change to the VCS root directory.
-*vim-cd*
+*vim-toplevel.txt*  Change to the VCS root directory.
+*toplevel*
 
-                                    vim-cd
+                                 vim-toplevel
 
   by Marco Hinz~
 
@@ -19,16 +19,16 @@
   Thank you for flying mhi^ airlines. Get the Vim on!
 <
 ==============================================================================
-TOC                                                             *cd-section-toc*
+TOC                                                       *toplevel-section-toc*
 
-  INTRO .......................... |cd-section-intro|
-  COMMANDS ....................... |cd-section-commands|
-  OPTIONS ........................ |cd-section-options|
+  INTRO .......................... |toplevel-section-intro|
+  COMMANDS ....................... |toplevel-section-commands|
+  OPTIONS ........................ |toplevel-section-options|
 
 ==============================================================================
-INTRO                                                         *cd-section-intro*
+INTRO                                                   *toplevel-section-intro*
 
-vim-cd helps changing to the root directory of a version control system.
+vim-toplevel helps changing to the root directory of a version control system.
 
 Supported VCS:~
 >
@@ -40,7 +40,7 @@ If you want support for another VCS, please open an issue report on Github (or
 send a pull request). Thanks!
 
 ==============================================================================
-COMMANDS                                                   *cd-section-commands*
+COMMANDS                                             *toplevel-section-commands*
 
 There are really just two commands:
 >
@@ -58,17 +58,17 @@ This command uses the builtin function |system()| to start external programs
 (e.g. "git" or "hg") to get the VCS root directory and change to it.
 
 ==============================================================================
-OPTIONS                                                     *cd-section-options*
+OPTIONS                                               *toplevel-section-options*
 
 Put these variables into your vimrc:
 >
-    let g:cd_vcs_list = ['git', 'hg']
+    let g:toplevel_vcs_list = ['git', 'hg']
 <
-Tell vim-cd what VCS to look for and in what order.
+Tell vim-toplevel what VCS to look for and in what order.
 
 Possible values are: ['git', 'hg', 'bzr']
 >
-    let g:cd_enable_vimshell = 0
+    let g:toplevel_enable_vimshell = 0
 
 If you're on Windows and have vim-misc/vim-shell installed, enabling this will
 avoid the annoying flickering of the cmd.exe popping up for the fraction of a
