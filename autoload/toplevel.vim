@@ -23,7 +23,7 @@ function! toplevel#find_root_by_finddir(bang) abort
     return s:cd_to_vcs_root(a:bang, b:root_by_finddir)
   endif
 
-  let curdir = resolve(expand('%:p:h'))
+  let curdir = resolve(expand('<afile>:p:h'))
 
   for vcs in s:vcs_list
     let root = finddir('.'.vcs, curdir.';')
