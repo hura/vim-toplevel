@@ -55,6 +55,8 @@ Put these variables into your vimrc:
 
 Tell vim-cd what VCS to look for and in what order.
 
+Possible values are: `['git', 'hg', 'bzr']`
+
     let g:cd_enable_vimshell = 0
 
 If you're on Windows and have vim-misc/vim-shell installed, enabling this will
