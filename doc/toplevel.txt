@@ -83,6 +83,15 @@ Put these variables into your vimrc:
 Tell vim-toplevel what VCS to look for and in what order.
 
 Possible values are: ['git', 'hg', 'bzr']
+
+------------------------------------------------------------------------------
+>
+    let g:toplevel_change_on_bufenter = 0
+<
+Use :Cd on entering a buffer. An already found root directory for a buffer
+will be cached, thus frequent switching between buffers is no problem.
+
+------------------------------------------------------------------------------
 >
     let g:toplevel_enable_vimshell = 0
 <

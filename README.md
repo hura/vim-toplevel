@@ -57,13 +57,28 @@ Options
 
 Put these variables into your vimrc:
 
-    let g:toplevel_vcs_list = ['git', 'hg']
+```vim
+let g:toplevel_vcs_list = ['git', 'hg']
+```
 
 Tell vim-toplevel what VCS to look for and in what order.
 
 Possible values are: `['git', 'hg', 'bzr']`
 
-    let g:toplevel_enable_vimshell = 0
+---
+
+```vim
+let g:toplevel_change_on_bufenter = 0
+```
+
+Use `:Cd` on entering a buffer. An already found root directory for a buffer
+will be cached, thus frequent switching between buffers is no problem.
+
+---
+
+```vim
+let g:toplevel_enable_vimshell = 0
+```
 
 If you're on Windows and have vim-misc/vim-shell installed, enabling this will
 avoid the annoying flickering of the cmd.exe popping up for the fraction of a
