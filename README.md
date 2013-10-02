@@ -14,10 +14,9 @@ Github.
 Intro
 -----
 
-vim-cd helps changing to the root directory of the currently used version
-control system.
+vim-cd helps changing to the root directory of a version control system.
 
-Currently supports:
+Supported VCS:
 
     - git
     - hg
@@ -27,23 +26,33 @@ send a pull request). Thanks!
 
 ---
 
-There are really just 2 commands:
+There are really just two commands:
 
 ```
 :Cd        change directory for the current window
 :Cd!       change directory for all windows
 ```
 
-These commands use the builtin function `finddir()` to get the  VCS root
-repository and change to it.
+This command uses the builtin function _finddir()_ to get the VCS root repository
+and change to it. It starts searching from the directory of the current
+buffer.
 
 ```
 :Root      change directory for the current window
 :Root!     change directory for all windows
 ```
 
-These commands use external programs (e.g. _git_ or _hg_) to get the VCS root
-directory and change to it.
+This command uses the builtin function |system()| to start external programs
+(e.g. _git_ or _hg_) to get the VCS root directory and change to it.
+
+Options
+-------
+
+Put these variables into your vimrc:
+
+    let g:cd_vcs_list = ['git', 'hg']
+
+Tell vim-cd what VCS to look for and in what order.
 
 Installation & Documentation
 ----------------------------
