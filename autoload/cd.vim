@@ -42,7 +42,12 @@ function! cd#find_root_by_system(bang) abort
   endif
 
   for vcs in s:vcs_list
-    let root = cd#detect_{vcs}()
+    try
+      let root = cd#detect_{vcs}()
+    catch
+      continue
+    endtry
+
     if !empty(root)
       let b:root_by_system = split(root)[0]
       return cd#cd_to_vcs_root(a:bang, b:root_by_system)
