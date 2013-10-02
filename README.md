@@ -33,6 +33,10 @@ the root directory. Both use different approaches, though.
 You'll almost always want to use `:Cd`, because it should be faster since it
 doesn't have to run external programs.
 
+`:Root` can be used in case your _hg_ repository contains a directory (or
+symlink) named `.git` or even `.hg` although it isn't the one from the root
+directory. `:Cd` would use the wrong directory in such cases.
+
 ---
 
 ```
