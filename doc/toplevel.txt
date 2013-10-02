@@ -30,6 +30,7 @@ TOC                                                       *toplevel-section-toc*
   INTRO .......................... |toplevel-section-intro|
   COMMANDS ....................... |toplevel-section-commands|
   OPTIONS ........................ |toplevel-section-options|
+  EXAMPLE-CONFIG ................. |toplevel-section-example|
 
 ==============================================================================
 INTRO                                                   *toplevel-section-intro*
@@ -118,5 +119,19 @@ If you're on Windows and have vim-misc/vim-shell installed, enabling this will
 avoid the annoying flickering of the cmd.exe popping up for the fraction of a
 second. Only makes a difference for :Root, not for :Cd.
 
+==============================================================================
+EXAMPLE-CONFIG                                        *toplevel-section-example*
+>
+    let g:toplevel_vcs_list = [
+          \ ['git', '.git'],
+          \ ['hg',  '.hg' ],
+          \ ]
+
+    " automatically change to the root directory
+    " for all .vim and .c buffers
+    augroup toplevel
+      autocmd BufEnter *.vim,*.c silent Cd
+    augroup END
+<
 ==============================================================================
 vim: tw=78

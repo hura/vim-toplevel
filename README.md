@@ -122,6 +122,22 @@ documentation for further customization:
     :Helptags  " rebuilding tags files
     :h toplevel
 
+Example config
+--------------
+
+```vim
+let g:toplevel_vcs_list = [
+      \ ['git', '.git'],
+      \ ['hg',  '.hg' ],
+      \ ]
+
+" automatically change to the root directory
+" for all .vim and .c buffers
+augroup toplevel
+  autocmd BufEnter *.vim,*.c silent Cd
+augroup END
+```
+
 License
 -------
 
