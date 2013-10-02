@@ -14,21 +14,13 @@ Github.
 Intro
 -----
 
-vim-toplevel helps changing to the root directory of a version control system.
-
-Supported VCS:
-
-    - git
-    - hg
-    - bzr
-
-If you want support for another VCS, please open an issue report on Github (or
-send a pull request). Thanks!
+vim-toplevel helps changing to the root directory of a version control system or
+any specified custom directory.
 
 ---
 
 There are really just two commands that try to accomplish the same: changing to
-the root directory. Both use different approaches, though.
+a certain root directory. Both use different approaches, though.
 
 You'll almost always want to use `:Cd`, because it should be faster since it
 doesn't have to run external programs.
@@ -44,7 +36,7 @@ directory. `:Cd` would use the wrong directory in such cases.
 :Cd!       change directory for all windows
 ```
 
-This command uses the builtin function _finddir()_ to get the VCS root
+This command uses the builtin function _finddir()_ to get a certain root
 repository and change to it. It starts searching upwards from the directory of
 the current buffer.
 
@@ -55,6 +47,10 @@ the current buffer.
 
 This command uses the builtin function _system()_ to start external programs
 (e.g. _git_ or _hg_) to get the VCS root directory and change to it.
+
+---
+
+Have a look at `:help toplevel-section-options` on how to customize this plugin.
 
 Options
 -------
@@ -68,7 +64,7 @@ let g:toplevel_vcs_list = []
 This is a list of lists and determines what VCS to look for and in what order.
 
 The inner lists contain 2 elements whereas the first determines which program to
-use for :Root and the second which directory to seek for :Cd.
+use for `:Root` and the second which directory to seek for `:Cd`.
 
 Example:
 
@@ -80,7 +76,7 @@ let g:toplevel_vcs_list = [
       \ ]
 ```
 
-You can specify any directory for :Cd, but Root will only work with supported
+You can specify any directory for `:Cd`, but Root will only work with supported
 repositories (although you won't get an error either):
 
 ```

@@ -34,22 +34,14 @@ TOC                                                       *toplevel-section-toc*
 ==============================================================================
 INTRO                                                   *toplevel-section-intro*
 
-vim-toplevel helps changing to the root directory of a version control system.
-
-Supported VCS:~
->
-    - git
-    - hg
-    - bzr
-<
-If you want support for another VCS, please open an issue report on Github (or
-send a pull request). Thanks!
+vim-toplevel helps changing to the root directory of a version control system
+or any specified custom directory.
 
 ==============================================================================
 COMMANDS                                             *toplevel-section-commands*
 
 There are really just two commands that try to accomplish the same: changing
-to the root directory. Both use different approaches, though.
+to a certain root directory. Both use different approaches, though.
 
 You'll almost always want to use :Cd, because it should be faster since it
 doesn't have to run external programs.
@@ -63,9 +55,9 @@ named ".git" or even ".hg" although it isn't the one from the root directory.
     :Cd        change directory for the current window
     :Cd!       change directory for all windows
 <
-This command uses the builtin function |finddir()| to get the VCS root
-repository and change to it. It starts searching upwards from the directory
-of the current buffer.
+This command uses the builtin function |finddir()| to get a certain root
+repository and change to it. It starts searching upwards from the directory of
+the current buffer.
 
 ------------------------------------------------------------------------------
 >
@@ -74,6 +66,10 @@ of the current buffer.
 >
 This command uses the builtin function |system()| to start external programs
 (e.g. "git" or "hg") to get the VCS root directory and change to it.
+
+------------------------------------------------------------------------------
+
+Have a look at |toplevel-section-options| on how to customize this plugin.
 
 ==============================================================================
 OPTIONS                                               *toplevel-section-options*
