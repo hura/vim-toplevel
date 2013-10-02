@@ -63,7 +63,7 @@ function! cd#find_root_by_system(bang) abort
 endfunction
 "}}}
 
-" #cd_to_vcs_root {{{1
+" s:cd_to_vcs_root {{{1
 function! s:cd_to_vcs_root(bang, root) abort
   if a:bang
     execute 'cd' a:root
@@ -74,7 +74,7 @@ function! s:cd_to_vcs_root(bang, root) abort
 endfunction
 "}}}
 
-" #detect_git {{{1
+" s:detect_git {{{1
 function! s:detect_git() abort
   let cmd = 'git rev-parse --show-toplevel'
 
@@ -87,7 +87,7 @@ function! s:detect_git() abort
   return v:shell_error ? '' : root
 endfunction
 
-" #detect_hg {{{1
+" s:detect_hg {{{1
 function! s:detect_hg() abort
   let cmd = 'hg root'
 
@@ -100,7 +100,7 @@ function! s:detect_hg() abort
   return v:shell_error ? '' : root
 endfunction
 
-" #detect_bzr {{{1
+" s:detect_bzr {{{1
 function! s:detect_bzr() abort
   let cmd = 'bzr root'
 
