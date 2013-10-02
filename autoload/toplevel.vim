@@ -11,7 +11,7 @@ let s:vcs_dict = {
 
 let s:vcs_list = get(g:, 'toplevel_vcs_list', [])
 if empty(s:vcs_list)
-  let s:vcs_list = keys(filter(s:vcs_dict, 'executable(v:val)'))
+  let s:vcs_list = filter(keys(s:vcs_dict), 'executable(v:val)')
 endif
 
 let s:vsmode = (has('win32') && get(g:, 'toplevel_enable_vimshell')) ? 1 : 0
