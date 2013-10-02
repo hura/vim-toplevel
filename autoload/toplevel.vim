@@ -9,16 +9,16 @@ let s:vcs_dict = {
       \ 'bzr': 'bzr',
       \ }
 
-let s:vcs_list = get(g:, 'cd_vcs_list', [])
+let s:vcs_list = get(g:, 'toplevel_vcs_list', [])
 if empty(s:vcs_list)
   let s:vcs_list = keys(filter(s:vcs_dict, 'executable(v:val)'))
 endif
 
-let s:vsmode = (has('win32') && get(g:, 'cd_enable_vimshell')) ? 1 : 0
+let s:vsmode = (has('win32') && get(g:, 'toplevel_enable_vimshell')) ? 1 : 0
 "}}}
 
 " #find_root_by_finddir {{{1
-function! cd#find_root_by_finddir(bang) abort
+function! toplevel#find_root_by_finddir(bang) abort
   if exists('b:root_by_finddir')
     return s:cd_to_vcs_root(a:bang, b:root_by_finddir)
   endif
@@ -39,7 +39,7 @@ function! cd#find_root_by_finddir(bang) abort
 endfunction
 
 " #find_root_by_system {{{1
-function! cd#find_root_by_system(bang) abort
+function! toplevel#find_root_by_system(bang) abort
   if exists('b:root_by_system')
     return s:cd_to_vcs_root(a:bang, b:root_by_system)
   endif
