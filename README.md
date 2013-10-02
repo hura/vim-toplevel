@@ -62,12 +62,35 @@ Options
 Put these variables into your vimrc:
 
 ```vim
-let g:toplevel_vcs_list = ['git', 'hg']
+let g:toplevel_vcs_list = []
 ```
 
-Tell vim-toplevel what VCS to look for and in what order.
+This is a list of lists and determines what VCS to look for and in what order.
 
-Possible values are: `['git', 'hg', 'bzr']`
+The inner lists contain 2 elements whereas the first determines which program to
+use for :Root and the second which directory to seek for :Cd.
+
+Example:
+
+```vim
+let g:toplevel_vcs_list = [
+      \ ['git',   '.git'  ],
+      \ ['hg',    '.hg'   ],
+      \ ['darcs', '_darcs'],
+      \ ]
+```
+
+You can specify any directory for :Cd, but Root will only work with supported
+repositories (although you won't get an error either):
+
+```
+'git'
+'hg'
+'bzr'
+```
+
+_NOTE_: Setting this variable in your vimrc will lead to less runtime checks and
+a bit more performance.
 
 ---
 

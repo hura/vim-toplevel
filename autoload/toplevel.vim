@@ -3,15 +3,14 @@
 scriptencoding utf-8
 
 " Init {{{1
-let s:vcs_dict = {
-      \ 'git': 'git',
-      \ 'hg':  'hg',
-      \ 'bzr': 'bzr',
-      \ }
-
 let s:vcs_list = get(g:, 'toplevel_vcs_list', [])
 if empty(s:vcs_list)
-  let s:vcs_list = filter(keys(s:vcs_dict), 'executable(v:val)')
+  let s:vcs_list = [
+        \ ['git', '.git'],
+        \ ['hg',  '.hg'],
+        \ ['bzr', '.bzr'],
+        \ ]
+  let s:vcs_list = filter(s:vcs_list, 'executable(v:val[0])')
 endif
 
 let s:vsmode = (has('win32') && get(g:, 'toplevel_enable_vimshell')) ? 1 : 0
@@ -26,7 +25,7 @@ function! toplevel#find_root_by_finddir(bang) abort
   let curdir = resolve(expand('<afile>:p:h'))
 
   for vcs in s:vcs_list
-    let root = finddir('.'.vcs, curdir.';')
+    let root = finddir(vcs[1], curdir .';')
     if !empty(root)
       let b:root_by_finddir = fnamemodify(root, ':p:h:h')
       return s:cd_to_vcs_root(a:bang, b:root_by_finddir)
@@ -46,7 +45,7 @@ function! toplevel#find_root_by_system(bang) abort
 
   for vcs in s:vcs_list
     try
-      let root = s:detect_{vcs}()
+      let root = s:detect_{vcs[0]}()
     catch
       continue
     endtry
