@@ -1,0 +1,69 @@
+*cd.txt*  Change to the VCS root directory.
+*vim-cd*
+
+                                    vim-cd
+
+  by Marco Hinz~
+
+  Twitter: https://twitter.com/_mhinz_
+  Github:  http://github.com/mhinz
+  IRC:     mhi^ (Freenode)
+>
+  If you use any of my plugins, please star them on github. It's a great way
+  of getting feedback and gives me the kick to put more time into their
+  development.
+
+  If you encounter any bugs or have feature requests, just open an issue
+  report on Github.
+
+  Thank you for flying mhi^ airlines. Get the Vim on!
+<
+==============================================================================
+TOC                                                             *cd-section-toc*
+
+  INTRO .......................... |cd-section-intro|
+  COMMANDS ....................... |cd-section-commands|
+  OPTIONS ........................ |cd-section-options|
+
+==============================================================================
+INTRO                                                         *cd-section-intro*
+
+vim-cd helps changing to the root directory of a version control system.
+
+Supported VCS:~
+>
+    - git
+    - hg
+<
+If you want support for another VCS, please open an issue report on Github (or
+send a pull request). Thanks!
+
+==============================================================================
+COMMANDS                                                   *cd-section-commands*
+
+There are really just two commands:
+>
+    :Cd        change directory for the current window
+    :Cd!       change directory for all windows
+<
+This command uses the builtin function |finddir()| to get the VCS root repository
+and change to it. It starts searching from the directory of the current
+buffer.
+>
+    :Root      change directory for the current window
+    :Root!     change directory for all windows
+>
+This command uses the builtin function |system()| to start external programs
+(e.g. "git" or "hg") to get the VCS root directory and change to it.
+
+==============================================================================
+OPTIONS                                                     *cd-section-options*
+
+Put these variables into your vimrc:
+>
+    let g:cd_vcs_list = ['git', 'hg']
+<
+Tell vim-cd what VCS to look for and in what order.
+
+==============================================================================
+vim: tw=78
