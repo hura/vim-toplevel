@@ -132,6 +132,12 @@ let g:toplevel_vcs_list = [
 augroup toplevel
   autocmd BufEnter *.vim,*.c silent Cd
 augroup END
+
+" automatically change to the root directory
+" for all files within ~/project
+augroup toplevel
+  autocmd BufEnter ~/project/project/* silent Cd
+augroup END
 ```
 
 License
