@@ -17,7 +17,8 @@ Intro
 vim-toplevel helps changing to the root directory of a version control system or
 any specified custom directory.
 
----
+Commands
+--------
 
 There are really just two commands that try to accomplish the same: changing to
 a certain root directory. Both use different approaches, though.
