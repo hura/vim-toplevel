@@ -1,4 +1,4 @@
-*vim-toplevel.txt*  Change to the VCS root directory.
+*vim-toplevel.txt*  Quickly change to a root directory.
 *toplevel*
          __                   ___                           ___
         /\ \__               /\_ \                         /\_ \
