@@ -29,6 +29,10 @@ doesn't have to run external programs.
 symlink) named `.git` or even `.hg` although it isn't the one from the root
 directory. `:Cd` would use the wrong directory in such cases.
 
+_NOTE_: Found root directories will be cached, so frequent switching between
+buffers doesn't effect performance, even when you set up an autocmd to trigger
+on BufEnter. For an example see `:h toplevel-section-example`.
+
 ---
 
 ```
@@ -87,15 +91,6 @@ repositories (although you won't get an error either):
 
 _NOTE_: Setting this variable in your vimrc will lead to less runtime checks and
 a bit more performance.
-
----
-
-```vim
-let g:toplevel_change_on_bufenter = 0
-```
-
-Use `:Cd` on entering a buffer. An already found root directory for a buffer
-will be cached, thus frequent switching between buffers is no problem.
 
 ---
 
