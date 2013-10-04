@@ -2,112 +2,13 @@
 
 scriptencoding utf-8
 
-" Init {{{1
-let s:vcs_list = get(g:, 'toplevel_vcs_list', [])
-if empty(s:vcs_list)
-  let s:vcs_list = [
-        \ ['git', '.git'],
-        \ ['hg',  '.hg'],
-        \ ['bzr', '.bzr'],
-        \ ]
-  let s:vcs_list = filter(s:vcs_list, 'executable(v:val[0])')
-endif
-
-let s:vsmode = (has('win32') && get(g:, 'toplevel_enable_vimshell')) ? 1 : 0
-"}}}
-
-" #find_root_by_finddir {{{1
-function! toplevel#find_root_by_finddir(bang) abort
-  if exists('b:root_by_finddir')
-    return s:cd_to_vcs_root(a:bang, b:root_by_finddir)
-  endif
-
-  let curdir = resolve(expand('<afile>:p:h'))
-
-  for vcs in s:vcs_list
-    let root = finddir(vcs[1], curdir .';')
-    if !empty(root)
-      let b:root_by_finddir = fnamemodify(root, ':p:h:h')
-      return s:cd_to_vcs_root(a:bang, b:root_by_finddir)
-    endif
-  endfor
-
-  echohl ErrorMsg
-  echo 'No VCS found.'
-  echohl NONE
-endfunction
-
-" #find_root_by_system {{{1
-function! toplevel#find_root_by_system(bang) abort
-  if exists('b:root_by_system')
-    return s:cd_to_vcs_root(a:bang, b:root_by_system)
-  endif
-
-  for vcs in s:vcs_list
-    try
-      let root = s:detect_{vcs[0]}()
-    catch
-      continue
-    endtry
-
-    if !empty(root)
-      let b:root_by_system = split(root)[0]
-      return s:cd_to_vcs_root(a:bang, b:root_by_system)
-    endif
-  endfor
-
-  echohl ErrorMsg
-  echo 'No VCS found.'
-  echohl NONE
-endfunction
-"}}}
-
-" s:cd_to_vcs_root {{{1
-function! s:cd_to_vcs_root(bang, root) abort
+" toplevel#cd_to_root {{{1
+function! toplevel#cd_to_root(bang, rootpath) abort
   if a:bang
-    execute 'cd' a:root
+    execute 'cd' a:rootpath
   else
-    execute 'lcd' a:root
-  endif
-  echo 'Changed to: '. a:root
-endfunction
-"}}}
-
-" s:detect_git {{{1
-function! s:detect_git() abort
-  let cmd = 'git rev-parse --show-toplevel'
-
-  if s:vsmode
-    let ret = xolox#misc#os#exec({'command': cmd})
-    return ret.exit_code ? '' : join(ret.stdout, "\n")
+    execute 'lcd' a:rootpath
   endif
 
-  let root = system(cmd)
-  return v:shell_error ? '' : root
-endfunction
-
-" s:detect_hg {{{1
-function! s:detect_hg() abort
-  let cmd = 'hg root'
-
-  if s:vsmode
-    let ret = xolox#misc#os#exec({'command': cmd})
-    return ret.exit_code ? '' : join(ret.stdout, "\n")
-  endif
-
-  let root = system(cmd)
-  return v:shell_error ? '' : root
-endfunction
-
-" s:detect_bzr {{{1
-function! s:detect_bzr() abort
-  let cmd = 'bzr root'
-
-  if s:vsmode
-    let ret = xolox#misc#os#exec({'command': cmd})
-    return ret.exit_code ? '' : join(ret.stdout, "\n")
-  endif
-
-  let root = system(cmd)
-  return v:shell_error ? '' : root
+  echo 'Changed to: '. a:rootpath
 endfunction

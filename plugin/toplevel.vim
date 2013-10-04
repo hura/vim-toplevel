@@ -2,10 +2,14 @@
 
 scriptencoding utf-8
 
-if exists('g:loaded_toplevel') || &cp
+if exists('g:loaded_toplevel') || &compatible
   finish
 endif
 let g:loaded_toplevel = 1
 
-command! -nargs=0 -bar -bang Root call toplevel#find_root_by_system(<bang>0)
-command! -nargs=0 -bar -bang Cd   call toplevel#find_root_by_finddir(<bang>0)
+if !exists('toplevel')
+  let toplevel = {}
+endif
+
+command! -nargs=0 -bar -bang Cd   call toplevel#cd#find(<bang>0)
+command! -nargs=0 -bar -bang Root call toplevel#root#find(<bang>0)
