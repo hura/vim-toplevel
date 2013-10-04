@@ -25,7 +25,7 @@ function! toplevel#cd#find(bang) abort
   for target in s:cdlist
     let root = call(target[1], [target[0], curdir])
     if !empty(root)
-      let b:toplevel_cd = fnamemodify(root, ':p:h:h')
+      let b:toplevel_cd = (target[1] == 'finddir') ? fnamemodify(root, ':p:h:h') : fnamemodify(root, ':p:h')
       return toplevel#cd_to_root(a:bang, b:toplevel_cd)
     endif
   endfor
