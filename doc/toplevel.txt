@@ -1,4 +1,4 @@
-*vim-toplevel.txt*  Quickly change to a root directory.
+*toplevel.txt*  Quickly change to a root directory.
 *toplevel*
          __                   ___                           ___
         /\ \__               /\_ \                         /\_ \
@@ -56,6 +56,7 @@ buffers doesn't effect performance, even when you set up an autocmd to trigger
 on BufEnter. For an example see |toplevel-section-example|.
 
 ------------------------------------------------------------------------------
+                                                           *toplevel-command-cd*
 >
     :Cd        change directory for the current window
     :Cd!       change directory for all windows
@@ -65,6 +66,7 @@ repository and change to it. It starts searching upwards from the directory of
 the current buffer.
 
 ------------------------------------------------------------------------------
+                                                         *toplevel-command-root*
 >
     :Root      change directory for the current window
     :Root!     change directory for all windows
@@ -72,68 +74,116 @@ the current buffer.
 This command uses the builtin function |system()| to start external programs
 (e.g. "git" or "hg") to get the VCS root directory and change to it.
 
-------------------------------------------------------------------------------
-
-Have a look at |toplevel-section-options| on how to customize this plugin.
-
 ==============================================================================
 OPTIONS                                               *toplevel-section-options*
 
-Put these variables into your vimrc:
+All configuration is done through one variable: g:toplevel.
+
+Available options:~
+
+    |toplevel-option-cdlist|
+    |toplevel-option-rootlist|
+    |toplevel-option-vimshell|
 
 ------------------------------------------------------------------------------
+                                                        *toplevel-option-cdlist*
 >
-    let g:toplevel_vcs_list = []
+    let toplevel = {
+        \ 'cdlist': [
+            \ ['.git',    'finddir' ],
+            \ ['_darcs',  'finddir' ],
+            \ ['.svn',    'finddir' ],
+            \ ['.fossil', 'findfile'],
+            \ ]
+        \ ]
 <
-This is a list of lists and determines what VCS to look for and in what order.
+This option tells :Cd what to do. It's a list of lists that contain two
+elements:
 
-The inner lists contain 2 elements whereas the first determines which program
-to use for :Root and the second which directory to seek for :Cd.
+    1)  name  The name of the file or directory to look for.
 
-An example:~
+    2)  type  This specifies whether to look for a file or directory.
+              It should be either 'finddir' or 'findfile'.
+
+:Cd will test for these files/directories in the given order.
+
+Default:~
 >
-    let g:toplevel_vcs_list = [
-          \ ['git',   '.git'  ],
-          \ ['hg',    '.hg'   ],
-          \ ['darcs', '_darcs'],
-          \ ]
+    [['.git', 'finddir'], ['.hg', 'finddir'], ['.bzr', 'finddir']]
+<
+------------------------------------------------------------------------------
+                                                      *toplevel-option-rootlist*
+>
+    let toplevel = { 'rootlist': ['bzr', 'hg'] }
+<
+This option tells :Root what to do. It's a list of external programs to use.
 
-You can specify any directory for :Cd, but Root will only work with supported
-repositories (although you won't get an error either):
+:Root will use these programs in the given order.
+
+NOTE: Explicitely setting this variable will lead to less runtime checks and a
+tad more performance.
+
+Currently supported:~
 >
     'git'
     'hg'
     'bzr'
 <
-NOTE: Setting this variable in your vimrc will lead to less runtime checks and
-a bit more performance.
-
-------------------------------------------------------------------------------
+Default:~
 >
-    let g:toplevel_enable_vimshell = 0
+    ['git', 'hg', 'bzr']
+<
+------------------------------------------------------------------------------
+                                                      *toplevel-option-vimshell*
+>
+    let toplevel = { 'vimshell': 1 }
 <
 If you're on Windows and have vim-misc/vim-shell installed, enabling this will
 avoid the annoying flickering of the cmd.exe popping up for the fraction of a
 second. Only makes a difference for :Root, not for :Cd.
 
+Default:~
+>
+    0
+<
 ==============================================================================
 EXAMPLE-CONFIG                                        *toplevel-section-example*
 >
-    let g:toplevel_vcs_list = [
-          \ ['git', '.git'],
-          \ ['hg',  '.hg' ],
+    let toplevel = {
+          \ 'cdlist': [
+                \ ['.git',    'finddir' ],
+                \ ['_darcs',  'finddir' ],
+                \ ['.svn',    'finddir' ],
+                \ ['.fossil', 'findfile'],
+                \ ],
+          \ 'rootlist': [
+                \ 'hg',
+                \ 'bzr',
+                \ ],
+          \ 'vimshell': 0,
+          \ }
+
+    augroup toplevel
+      autocmd BufEnter * silent Cd
+    augroup END
+<
+------------------------------------------------------------------------------
+
+This example does exactly the same as the one given above, but uses a slightly
+different syntax:
+>
+    let toplevel          = {}
+    let toplevel.vimshell = 0
+    let toplevel.rootlist = ['hg', 'bzr']
+    let toplevel.cdlist   = [
+          \ ['.git',    'finddir' ],
+          \ ['_darcs',  'finddir' ],
+          \ ['.svn',    'finddir' ],
+          \ ['.fossil', 'findfile'],
           \ ]
 
-    " automatically change to the root directory
-    " for all .vim and .c buffers
     augroup toplevel
-      autocmd BufEnter *.vim,*.c silent Cd
-    augroup END
-
-    " automatically change to the root directory
-    " for all files within ~/project
-    augroup toplevel
-      autocmd BufEnter ~/project/project/* silent Cd
+      autocmd BufEnter * silent Cd
     augroup END
 <
 ==============================================================================

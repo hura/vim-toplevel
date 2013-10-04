@@ -53,36 +53,50 @@ the current buffer.
 This command uses the builtin function _system()_ to start external programs
 (e.g. _git_ or _hg_) to get the VCS root directory and change to it.
 
----
-
-Have a look at `:help toplevel-section-options` on how to customize this plugin.
-
 Options
 -------
 
-Put these variables into your vimrc:
+All configuration is done through one variable: `g:toplevel`.
+
+---
 
 ```vim
-let g:toplevel_vcs_list = []
+let toplevel = {
+    \ 'cdlist': [
+        \ ['.git',    'finddir' ],
+        \ ['_darcs',  'finddir' ],
+        \ ['.svn',    'finddir' ],
+        \ ['.fossil', 'findfile'],
+        \ ]
+    \ ]
 ```
 
-This is a list of lists and determines what VCS to look for and in what order.
+This option tells `:Cd` what to do. It's a list of lists that contain two
+elements:
 
-The inner lists contain 2 elements whereas the first determines which program to
-use for `:Root` and the second which directory to seek for `:Cd`.
+```
+1)  name  The name of the file or directory to look for.
 
-Example:
+2)  type  This specifies whether to look for a file or directory.
+          It should be either 'finddir' or 'findfile'.
+```
+
+`:Cd` will test for these files/directories in the given order.
+
+---
 
 ```vim
-let g:toplevel_vcs_list = [
-      \ ['git',   '.git'  ],
-      \ ['hg',    '.hg'   ],
-      \ ['darcs', '_darcs'],
-      \ ]
+let toplevel = { 'rootlist': ['bzr', 'hg'] }
 ```
 
-You can specify any directory for `:Cd`, but Root will only work with supported
-repositories (although you won't get an error either):
+This option tells `:Root` what to do. It's a list of external programs to use.
+
+`:Root` will use these programs in the given order.
+
+_NOTE_: Explicitely setting this variable will lead to less runtime checks and a
+tad more performance.
+
+Currently supported:
 
 ```
 'git'
@@ -90,13 +104,10 @@ repositories (although you won't get an error either):
 'bzr'
 ```
 
-_NOTE_: Setting this variable in your vimrc will lead to less runtime checks and
-a bit more performance.
-
 ---
 
 ```vim
-let g:toplevel_enable_vimshell = 0
+let toplevel = { 'vimshell': 1 }
 ```
 
 If you're on Windows and have vim-misc/vim-shell installed, enabling this will
@@ -122,21 +133,43 @@ Example config
 --------------
 
 ```vim
-let g:toplevel_vcs_list = [
-      \ ['git', '.git'],
-      \ ['hg',  '.hg' ],
+let toplevel = {
+      \ 'cdlist': [
+            \ ['.git',    'finddir' ],
+            \ ['_darcs',  'finddir' ],
+            \ ['.svn',    'finddir' ],
+            \ ['.fossil', 'findfile'],
+            \ ],
+      \ 'rootlist': [
+            \ 'hg',
+            \ 'bzr',
+            \ ],
+      \ 'vimshell': 0,
+      \ }
+
+augroup toplevel
+  autocmd BufEnter * silent Cd
+augroup END
+```
+
+---
+
+This example does exactly the same as the one given above, but uses a slightly
+different syntax:
+
+```vim
+let toplevel          = {}
+let toplevel.vimshell = 0
+let toplevel.rootlist = ['hg', 'bzr']
+let toplevel.cdlist   = [
+      \ ['.git',    'finddir' ],
+      \ ['_darcs',  'finddir' ],
+      \ ['.svn',    'finddir' ],
+      \ ['.fossil', 'findfile'],
       \ ]
 
-" automatically change to the root directory
-" for all .vim and .c buffers
 augroup toplevel
-  autocmd BufEnter *.vim,*.c silent Cd
-augroup END
-
-" automatically change to the root directory
-" for all files within ~/project
-augroup toplevel
-  autocmd BufEnter ~/project/project/* silent Cd
+  autocmd BufEnter * silent Cd
 augroup END
 ```
 
